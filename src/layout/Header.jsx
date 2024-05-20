@@ -30,7 +30,7 @@ const Header = () => {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <img src='src/assets/logo.png' />
+              <img src='/logo.png' />
             </IconButton>
             <Typography variant="h6" component="div" color={'black'} sx={{ flexGrow: 1 }}>
             Transilience AI
