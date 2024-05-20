@@ -11,17 +11,25 @@ const ScatterChartComponent = ({ url }) => {
   useEffect(() => {
     const fetchData = async () => {
         try {
-            const response = await getMonthCount(url); // Pass the URL to the API call method
+            const response = await getMonthCount(url); // Fetch data from the API
+            console.log('Month Count Response:', response);
 
             // Check if the response is an array and contains more than 8 items
-            const limitedData = Array.isArray(response) && response.length > 8
+            const limitedData = response && Array.isArray(response) && response.length > 8
                 ? response.slice(-8) // Get the last 8 items
                 : response; // Use the entire response if it's less than or equal to 8 items
 
-            setChartData(limitedData);
-            setLoading(false); // Set loading to false when data is received
+            if (response && Array.isArray(limitedData)) {
+                setChartData(limitedData);
+            } else {
+                console.error("Expected an array but got:", limitedData);
+                setChartData([]); // Handle unexpected structure
+            }
+
+            setLoading(false); // Update loading state
         } catch (error) {
             console.error("Error fetching data:", error);
+            setLoading(false); // Ensure loading is set to false even on error
         }
     };
 

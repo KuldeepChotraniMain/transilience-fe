@@ -12,16 +12,26 @@ const BarChartComponent = ({ url }) => {
         const fetchData = async () => {
             try {
                 const response = await getVendorCount(url); // Pass the URL to the API call method
-                setChartData(response);
+                console.log('API Response:', response); // Log the response to see its structure
+    
+                // Check if response is an array
+                if (response && Array.isArray(response)) {
+                    setChartData(response);
+                } else {
+                    console.error("Expected an array but got:", response);
+                    setChartData([]); // Set to an empty array or handle the unexpected structure accordingly
+                }
+    
                 setLoading(false); // Set loading to false when data is received
             } catch (error) {
                 console.error("Error fetching data:", error);
+                setLoading(false); // Ensure loading is set to false even on error
             }
         };
-
+    
         fetchData();
     }, [url]); // Include 'url' in the dependency array to re-fetch data when URL changes
-
+    
     return (
         <Fragment>
             <h4>Vendor Count</h4>

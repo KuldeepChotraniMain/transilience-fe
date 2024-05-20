@@ -10,17 +10,26 @@ const BarChartVerticalComponent = ({ url }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await getVendorSeverityCount(url); // Pass the URL to the API call method
-        setData(response);
-        setLoading(false); // Set loading to false when data is received
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+        try {
+            const response = await getVendorSeverityCount(url); // Fetch data from the API
+            console.log('Vendor Severity Count Response:', response);
+
+            if (response && Array.isArray(response)) {
+                setData(response);
+            } else {
+                console.error("Expected an array but got:", response);
+                setData([]); // Handle unexpected structure
+            }
+
+            setLoading(false); // Update loading state
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false); // Ensure loading is set to false even on error
+        }
     };
 
     fetchData();
-  }, [url]); // Include 'url' in the dependency array to re-fetch data when URL changes
+}, [url]); // Include 'url' in the dependency array to re-fetch data when URL changes
 
   return (
     <Fragment>

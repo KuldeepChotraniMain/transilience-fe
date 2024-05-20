@@ -12,7 +12,11 @@ const PieChartComponent = ({ url }) => {
     const fetchData = async () => {
       try {
         const response = await getSeverityCount(url); // Pass the URL to the API call method
-        setData(response);
+       
+       if(response)
+       setData(response);
+      else
+      setData([])
         setLoading(false); // Set loading to false when data is received
       } catch (error) {
         console.error("Error fetching data:", error);
