@@ -22,7 +22,7 @@ const ScatterChartComponent = ({ url }) => {
             if (response && Array.isArray(limitedData)) {
                 setChartData(limitedData);
             } else {
-                console.error("Expected an array but got:", limitedData);
+                console.error("Expected an array but got:", response);
                 setChartData([]); // Handle unexpected structure
             }
 
